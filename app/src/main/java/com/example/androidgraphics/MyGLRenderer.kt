@@ -16,6 +16,9 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private val viewMatrix = FloatArray(16)
     private val rotationMatrix = FloatArray(16)
 
+    @Volatile
+    var angle: Float = 0f
+
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
@@ -37,8 +40,6 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
         // Create a rotation transformation for the triangle
-        val time = SystemClock.uptimeMillis() % 4000L
-        val angle = 0.090f * time.toInt()
         Matrix.setRotateM(rotationMatrix, 0, angle, 0f, 0f, -1.0f)
 
         // Combine the rotation matrix with the projection and camera view
